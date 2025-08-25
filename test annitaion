@@ -1,0 +1,28 @@
+using NUnit.Framework;
+using System.Linq;
+
+namespace TestProject1
+{
+    [TestFixture]
+    public class ArrayAnnotatedTests
+    {
+        // Тестирование произведения положительных четных чисел
+        [TestCase(new int[] { 1, 2, 3, 4 }, 8)]
+        [TestCase(new int[] { -2, 4, 6 }, 24)]
+        public void TestEvenProductCases(int[] arr, int expected)
+        {
+            int prod = arr.Where(x => x > 0 && x % 2 == 0)
+                          .Aggregate(1, (x, y) => x * y);
+            Assert.AreEqual(expected, prod);
+        }
+
+        // Тестирование разности нечетных чисел
+        [TestCase(new int[] { 1, 3, 5 }, 4)]       // 5-1=4
+        [TestCase(new int[] { 7, 9, 11 }, 4)]      // 11-7=4
+        public void TestOddDifferenceCases(int[] arr, int expected)
+        {
+            int diff = arr.Where(x => x % 2 != 0).Max() - arr.Where(x => x % 2 != 0).Min();
+            Assert.AreEqual(expected, diff);
+        }
+    }
+}
