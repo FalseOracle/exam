@@ -1,0 +1,37 @@
+using System;
+using System.Linq;
+
+public class Program
+{
+    public static (int productEven, int differenceOdd) ProcessArray(int[] arr)
+    {
+        // произведение положительных четных
+        int productEven = arr.Where(x => x > 0 && x % 2 == 0).DefaultIfEmpty(1).Aggregate((a, b) => a * b);
+
+        // разность нечетных (берем первый - все остальные)
+        var odds = arr.Where(x => x % 2 != 0).ToArray();
+        int differenceOdd = odds.Length > 0 ? odds.Skip(1).Aggregate(odds[0], (a, b) => a - b) : 0;
+
+        return (productEven, differenceOdd);
+    }
+
+    public static void Main()
+    {
+        int[] numbers = { 2, -5, 7, 4, 9, 6, 1, -3, 8, 11, 13, 15, 10, -2, 20, 17, 19, 21, 23, 25 };
+
+        var result = ProcessArray(numbers);
+
+        Console.WriteLine("Произведение положительных четных = " + result.productEven);
+        Console.WriteLine("Разность нечетных = " + result.differenceOdd);
+    }
+}
+
+
+
+
+
+
+
+
+
+
